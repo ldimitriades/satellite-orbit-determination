@@ -1,0 +1,13 @@
+from astropy.coordinates import GCRS, TEME, EarthLocation
+from astropy.time import Time
+import astropy.units as u
+
+# Example position in GCRS (ICRF-equivalent) frame
+gcrs_position = [1-2.27291274e07, -1.33502501e08, -5.78710241e07]  # Example Cartesian coordinates in meters
+time = Time("2024-12-13T00:00:00", scale="utc")
+
+# Transform to TEME frame
+gcrs = GCRS(x=gcrs_position[0] * u.m, y=gcrs_position[1] * u.m, z=gcrs_position[2] * u.m, representation_type='cartesian', obstime=time)
+teme = gcrs.transform_to(TEME(obstime=time))
+
+print(f"TEME Position: {teme.x}, {teme.y}, {teme.z}")
